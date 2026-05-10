@@ -128,10 +128,12 @@ export default function MesProjets() {
                                                         <div key={c.id} className="bg-white p-4 rounded-lg border border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
                                                             <div className="flex items-center">
                                                                 <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold mr-3">
-                                                                    {c.user?.name ? c.user.name.charAt(0).toUpperCase() : '?'}
+                                                                    {c.user?.prenom ? c.user.prenom.charAt(0).toUpperCase() : '?'}
                                                                 </div>
                                                                 <div>
-                                                                    <p className="font-medium text-gray-900">{c.user?.name || 'Utilisateur inconnu'}</p>
+                                                                    <p className="font-medium text-gray-900">
+                                                                        {c.user ? `${c.user.prenom || ''} ${c.user.nom || ''}`.trim() : 'Utilisateur inconnu'}
+                                                                    </p>
                                                                     <p className="text-xs text-gray-500">{c.user?.email || ''}</p>
                                                                     {c.motivation && <p className="text-sm text-gray-600 mt-1 italic">"{c.motivation}"</p>}
                                                                 </div>
