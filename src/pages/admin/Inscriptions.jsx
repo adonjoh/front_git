@@ -49,32 +49,32 @@ const Inscriptions = () => {
         <DashboardLayout>
             <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                    <h2 className="text-2xl font-bold text-gray-800">📋 Inscriptions en attente</h2>
-                    <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-medium">
+                    <h2 className="text-2xl font-bold text-white">📋 Inscriptions en attente</h2>
+                    <span className="bg-indigo-500/20 text-indigo-400 px-3 py-1 rounded-full text-sm font-medium">
                         {users.length} en attente
                     </span>
                 </div>
 
                 {loading ? (
-                    <div className="text-center py-12 text-gray-400">Chargement...</div>
+                    <div className="text-center py-12 text-slate-500">Chargement...</div>
                 ) : users.length === 0 ? (
-                    <div className="bg-white rounded-xl border p-12 text-center">
+                    <div className="bg-white/[0.02] backdrop-blur-md rounded-xl border p-12 text-center">
                         <p className="text-4xl mb-3">✅</p>
-                        <p className="text-gray-500">Aucune inscription en attente.</p>
+                        <p className="text-slate-400">Aucune inscription en attente.</p>
                     </div>
                 ) : (
                     <div className="space-y-4">
                         {users.map(user => (
-                            <div key={user.id} className="bg-white rounded-xl border p-5 flex items-center justify-between gap-4">
+                            <div key={user.id} className="bg-white/[0.02] backdrop-blur-md rounded-xl border p-5 flex items-center justify-between gap-4">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-lg">
+                                    <div className="w-12 h-12 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-lg">
                                         {user.prenom?.[0]}{user.nom?.[0]}
                                     </div>
                                     <div>
-                                        <p className="font-semibold text-gray-800">{user.prenom} {user.nom}</p>
-                                        <p className="text-sm text-gray-500">{user.email}</p>
-                                        {user.telephone && <p className="text-sm text-gray-400">{user.telephone}</p>}
-                                        <p className="text-xs text-gray-400 mt-1">
+                                        <p className="font-semibold text-white">{user.prenom} {user.nom}</p>
+                                        <p className="text-sm text-slate-400">{user.email}</p>
+                                        {user.telephone && <p className="text-sm text-slate-500">{user.telephone}</p>}
+                                        <p className="text-xs text-slate-500 mt-1">
                                             Inscrit le {new Date(user.created_at).toLocaleDateString('fr-FR')}
                                         </p>
                                     </div>

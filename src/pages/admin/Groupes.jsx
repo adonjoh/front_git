@@ -89,18 +89,18 @@ export default function Groupes() {
                 
                 {/* Colonne de gauche: Formulaire */}
                 <div className="lg:col-span-1">
-                    <div className="bg-white rounded-xl border p-6 shadow-sm sticky top-6">
-                        <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <div className="bg-white/[0.02] backdrop-blur-md rounded-xl border p-6 shadow-sm sticky top-6">
+                        <h2 className="text-xl font-bold text-white mb-4 flex items-center">
                             <Plus className="w-5 h-5 mr-2 text-indigo-600" /> Créer un groupe
                         </h2>
                         
                         <form onSubmit={handleCreateGroup} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Nom du groupe</label>
+                                <label className="block text-sm font-medium text-slate-300 mb-1">Nom du groupe</label>
                                 <input
                                     type="text"
                                     required
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                    className="w-full px-4 py-2 border border-white/10 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                                     value={formData.nom}
                                     onChange={(e) => setFormData({...formData, nom: e.target.value})}
                                     placeholder="Ex: Team Hackathon 2024"
@@ -108,11 +108,11 @@ export default function Groupes() {
                             </div>
                             
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                                <label className="block text-sm font-medium text-slate-300 mb-1">Description</label>
                                 <textarea
                                     required
                                     rows="3"
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                    className="w-full px-4 py-2 border border-white/10 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                                     value={formData.description}
                                     onChange={(e) => setFormData({...formData, description: e.target.value})}
                                     placeholder="Sujet ou objectif de ce groupe..."
@@ -120,9 +120,9 @@ export default function Groupes() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Type de groupe</label>
+                                <label className="block text-sm font-medium text-slate-300 mb-1">Type de groupe</label>
                                 <select
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                                    className="w-full px-4 py-2 border border-white/10 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white/[0.02] backdrop-blur-md"
                                     value={formData.type}
                                     onChange={(e) => setFormData({...formData, type: e.target.value})}
                                 >
@@ -145,54 +145,54 @@ export default function Groupes() {
 
                 {/* Colonne de droite: Liste des groupes */}
                 <div className="lg:col-span-2 space-y-4">
-                    {error && <div className="text-red-500 p-4 bg-red-50 rounded-xl border border-red-200">{error}</div>}
+                    {error && <div className="text-red-500 p-4 bg-rose-500/10 rounded-xl border border-rose-500/20">{error}</div>}
                     
                     {loading ? (
                         <div className="flex justify-center py-12">
                             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
                         </div>
                     ) : groupes.length === 0 ? (
-                        <div className="bg-white rounded-xl border p-12 text-center text-gray-500">
+                        <div className="bg-white/[0.02] backdrop-blur-md rounded-xl border p-12 text-center text-slate-400">
                             <Users className="w-16 h-16 mx-auto mb-4 text-gray-300" />
                             <p className="text-lg">Aucun groupe n'existe pour le moment.</p>
                         </div>
                     ) : (
                         groupes.map(groupe => (
-                            <div key={groupe.id} className="bg-white rounded-xl border p-5 shadow-sm hover:shadow-md transition-shadow">
+                            <div key={groupe.id} className="bg-white/[0.02] backdrop-blur-md rounded-xl border p-5 shadow-sm hover:shadow-md transition-shadow">
                                 <div className="flex justify-between items-start mb-3">
                                     <div className="flex items-center gap-3">
-                                        <div className="p-2 bg-gray-50 rounded-lg border border-gray-100">
+                                        <div className="p-2 bg-white/[0.01] rounded-lg border border-white/5">
                                             {getTypeIcon(groupe.type)}
                                         </div>
                                         <div>
-                                            <h3 className="text-lg font-bold text-gray-900">{groupe.nom}</h3>
-                                            <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                                            <h3 className="text-lg font-bold text-white">{groupe.nom}</h3>
+                                            <span className="text-xs font-medium text-slate-400 bg-white/[0.02] px-2 py-0.5 rounded-full">
                                                 {getTypeLabel(groupe.type)}
                                             </span>
                                         </div>
                                     </div>
-                                    <div className="text-sm font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full flex items-center">
+                                    <div className="text-sm font-bold text-indigo-600 bg-indigo-500/10 px-3 py-1 rounded-full flex items-center">
                                         <Users className="w-4 h-4 mr-1" />
                                         {groupe.membres_count || '?'}
                                     </div>
                                 </div>
                                 
-                                <p className="text-gray-600 text-sm mb-5">{groupe.description}</p>
+                                <p className="text-slate-400 text-sm mb-5">{groupe.description}</p>
                                 
                                 {/* Section Ajout membre */}
-                                <div className="border-t border-gray-100 pt-4 mt-auto">
+                                <div className="border-t border-white/5 pt-4 mt-auto">
                                     <form onSubmit={(e) => handleAddMember(e, groupe.id)} className="flex gap-2">
                                         <input
                                             type="number"
                                             required
                                             placeholder="ID de l'utilisateur"
-                                            className="flex-1 px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+                                            className="flex-1 px-3 py-1.5 border border-white/10 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                                             value={addMemberData[groupe.id] || ''}
                                             onChange={(e) => setAddMemberData({...addMemberData, [groupe.id]: e.target.value})}
                                         />
                                         <button
                                             type="submit"
-                                            className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1.5 rounded-lg text-sm font-medium flex items-center transition-colors"
+                                            className="bg-white/[0.02] hover:bg-gray-200 text-white px-3 py-1.5 rounded-lg text-sm font-medium flex items-center transition-colors"
                                         >
                                             <UserPlus className="w-4 h-4 mr-1" />
                                             Ajouter

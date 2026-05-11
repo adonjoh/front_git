@@ -48,16 +48,16 @@ const Utilisateurs = () => {
     }
 
     const statutColor = {
-        actif: 'bg-green-100 text-green-700',
-        en_attente: 'bg-yellow-100 text-yellow-700',
+        actif: 'bg-emerald-500/20 text-emerald-400',
+        en_attente: 'bg-yellow-100 text-amber-400',
         suspendu: 'bg-orange-100 text-orange-700',
-        renvoye: 'bg-red-100 text-red-700',
+        renvoye: 'bg-red-100 text-rose-400',
     }
 
     return (
         <DashboardLayout>
             <div className="space-y-6">
-                <h2 className="text-2xl font-bold text-gray-800">👥 Utilisateurs</h2>
+                <h2 className="text-2xl font-bold text-white">👥 Utilisateurs</h2>
 
                 {/* Filtres */}
                 <div className="flex gap-3 flex-wrap">
@@ -84,30 +84,30 @@ const Utilisateurs = () => {
 
                 {/* Table */}
                 {loading ? (
-                    <div className="text-center py-12 text-gray-400">Chargement...</div>
+                    <div className="text-center py-12 text-slate-500">Chargement...</div>
                 ) : (
-                    <div className="bg-white rounded-xl border overflow-hidden">
+                    <div className="bg-white/[0.02] backdrop-blur-md rounded-xl border overflow-hidden">
                         <table className="w-full text-sm">
-                            <thead className="bg-gray-50 border-b">
+                            <thead className="bg-white/[0.01] border-b">
                                 <tr>
-                                    <th className="text-left px-5 py-3 font-medium text-gray-600">Membre</th>
-                                    <th className="text-left px-5 py-3 font-medium text-gray-600">Rôle</th>
-                                    <th className="text-left px-5 py-3 font-medium text-gray-600">Statut</th>
-                                    <th className="text-left px-5 py-3 font-medium text-gray-600">Score</th>
-                                    <th className="text-left px-5 py-3 font-medium text-gray-600">Actions</th>
+                                    <th className="text-left px-5 py-3 font-medium text-slate-400">Membre</th>
+                                    <th className="text-left px-5 py-3 font-medium text-slate-400">Rôle</th>
+                                    <th className="text-left px-5 py-3 font-medium text-slate-400">Statut</th>
+                                    <th className="text-left px-5 py-3 font-medium text-slate-400">Score</th>
+                                    <th className="text-left px-5 py-3 font-medium text-slate-400">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y">
                                 {users.map(user => (
-                                    <tr key={user.id} className="hover:bg-gray-50">
+                                    <tr key={user.id} className="hover:bg-white/[0.01]">
                                         <td className="px-5 py-3">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs">
+                                                <div className="w-8 h-8 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-xs">
                                                     {user.prenom?.[0]}{user.nom?.[0]}
                                                 </div>
                                                 <div>
-                                                    <p className="font-medium text-gray-800">{user.prenom} {user.nom}</p>
-                                                    <p className="text-xs text-gray-400">{user.email}</p>
+                                                    <p className="font-medium text-white">{user.prenom} {user.nom}</p>
+                                                    <p className="text-xs text-slate-500">{user.email}</p>
                                                 </div>
                                             </div>
                                         </td>
@@ -116,12 +116,12 @@ const Utilisateurs = () => {
                                                 <select
                                                     defaultValue={user.roles?.[0]?.name}
                                                     onChange={e => modifierRole(user.id, e.target.value)}
-                                                    className="border rounded px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                                    className="border border-white/10 bg-white/5 rounded px-2 py-1 text-white text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                                 >
                                                     {ROLES.map(r => <option key={r} value={r}>{r}</option>)}
                                                 </select>
                                             ) : (
-                                                <span className="bg-indigo-100 text-indigo-700 px-2 py-1 rounded text-xs">
+                                                <span className="bg-indigo-500/20 text-indigo-400 px-2 py-1 rounded text-xs">
                                                     {user.roles?.[0]?.name || 'membre'}
                                                 </span>
                                             )}
@@ -131,7 +131,7 @@ const Utilisateurs = () => {
                                                 {user.statut}
                                             </span>
                                         </td>
-                                        <td className="px-5 py-3 font-medium text-gray-700">
+                                        <td className="px-5 py-3 font-medium text-slate-300">
                                             {user.score_total} pts
                                         </td>
                                         <td className="px-5 py-3">
@@ -144,7 +144,7 @@ const Utilisateurs = () => {
                                                 </button>
                                                 <button
                                                     onClick={() => supprimer(user.id)}
-                                                    className="text-red-500 hover:text-red-700 text-xs font-medium"
+                                                    className="text-red-500 hover:text-rose-400 text-xs font-medium"
                                                 >
                                                     🗑️ Suppr.
                                                 </button>
@@ -155,7 +155,7 @@ const Utilisateurs = () => {
                             </tbody>
                         </table>
                         {users.length === 0 && (
-                            <div className="text-center py-8 text-gray-400">Aucun utilisateur trouvé.</div>
+                            <div className="text-center py-8 text-slate-500">Aucun utilisateur trouvé.</div>
                         )}
                     </div>
                 )}

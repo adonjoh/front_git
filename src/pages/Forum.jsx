@@ -79,12 +79,12 @@ export default function Forum() {
     return (
         <DashboardLayout title="Forum de Discussion">
             <div className="max-w-4xl mx-auto space-y-6">
-                <div className="flex justify-between items-center bg-white p-5 rounded-xl border shadow-sm">
+                <div className="flex justify-between items-center bg-white/[0.02] backdrop-blur-md p-5 rounded-xl border shadow-sm">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900 flex items-center">
+                        <h1 className="text-2xl font-bold text-white flex items-center">
                             <MessageSquare className="w-6 h-6 mr-3 text-indigo-600" /> Espace Communautaire
                         </h1>
-                        <p className="text-gray-500 mt-1">Partagez vos idées, questions et actualités avec le club.</p>
+                        <p className="text-slate-400 mt-1">Partagez vos idées, questions et actualités avec le club.</p>
                     </div>
                     <button
                         onClick={() => setShowForm(!showForm)}
@@ -97,26 +97,26 @@ export default function Forum() {
 
                 {/* Formulaire de création */}
                 {showForm && (
-                    <div className="bg-white p-6 rounded-xl border shadow-md animate-in fade-in slide-in-from-top-4">
-                        <h2 className="text-lg font-bold text-gray-900 mb-4">Créer une discussion</h2>
+                    <div className="bg-white/[0.02] backdrop-blur-md p-6 rounded-xl border shadow-md animate-in fade-in slide-in-from-top-4">
+                        <h2 className="text-lg font-bold text-white mb-4">Créer une discussion</h2>
                         <form onSubmit={handleCreatePost} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Titre de la discussion</label>
+                                <label className="block text-sm font-medium text-slate-300 mb-1">Titre de la discussion</label>
                                 <input
                                     type="text"
                                     required
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+                                    className="w-full px-4 py-2 border border-white/10 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                                     value={formData.titre}
                                     onChange={(e) => setFormData({...formData, titre: e.target.value})}
                                     placeholder="De quoi voulez-vous parler ?"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Contenu du message</label>
+                                <label className="block text-sm font-medium text-slate-300 mb-1">Contenu du message</label>
                                 <textarea
                                     required
                                     rows="4"
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none resize-y"
+                                    className="w-full px-4 py-2 border border-white/10 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none resize-y"
                                     value={formData.contenu}
                                     onChange={(e) => setFormData({...formData, contenu: e.target.value})}
                                     placeholder="Détaillez votre sujet ici..."
@@ -137,7 +137,7 @@ export default function Forum() {
                 )}
 
                 {error && (
-                    <div className="bg-red-50 text-red-600 p-4 rounded-xl border border-red-200">
+                    <div className="bg-rose-500/10 text-rose-400 p-4 rounded-xl border border-rose-500/20">
                         {error}
                     </div>
                 )}
@@ -148,7 +148,7 @@ export default function Forum() {
                         <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
                     </div>
                 ) : posts.length === 0 ? (
-                    <div className="bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl p-16 text-center text-gray-500">
+                    <div className="bg-white/[0.01] border-2 border-dashed border-white/10 rounded-xl p-16 text-center text-slate-400">
                         <MessageSquare className="w-16 h-16 mx-auto mb-4 text-gray-300" />
                         <p className="text-lg">Le forum est vide pour le moment.</p>
                         <p className="text-sm mt-2">Soyez le premier à lancer une discussion !</p>
@@ -156,15 +156,15 @@ export default function Forum() {
                 ) : (
                     <div className="space-y-4">
                         {posts.map(post => (
-                            <div key={post.id} className="bg-white rounded-xl border p-5 shadow-sm hover:shadow-md transition-shadow">
+                            <div key={post.id} className="bg-white/[0.02] backdrop-blur-md rounded-xl border p-5 shadow-sm hover:shadow-md transition-shadow">
                                 <div className="flex items-start justify-between">
                                     <div className="flex items-center mb-3">
-                                        <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-lg mr-3">
+                                        <div className="w-10 h-10 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-lg mr-3">
                                             {post.user?.name ? post.user.name.charAt(0).toUpperCase() : '?'}
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-gray-900">{post.user?.name || 'Auteur inconnu'}</h4>
-                                            <div className="flex items-center text-xs text-gray-500">
+                                            <h4 className="font-bold text-white">{post.user?.name || 'Auteur inconnu'}</h4>
+                                            <div className="flex items-center text-xs text-slate-400">
                                                 <Clock className="w-3 h-3 mr-1" />
                                                 {formatDate(post.created_at)}
                                             </div>
@@ -173,17 +173,17 @@ export default function Forum() {
                                 </div>
                                 
                                 <div className="ml-13 mb-4">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-2">{post.titre}</h3>
-                                    <p className="text-gray-700 whitespace-pre-wrap">{post.contenu}</p>
+                                    <h3 className="text-xl font-bold text-white mb-2">{post.titre}</h3>
+                                    <p className="text-slate-300 whitespace-pre-wrap">{post.contenu}</p>
                                 </div>
                                 
-                                <div className="ml-13 flex items-center gap-4 pt-3 border-t border-gray-100">
+                                <div className="ml-13 flex items-center gap-4 pt-3 border-t border-white/5">
                                     <button 
                                         onClick={() => handleLike(post.id)}
                                         className={`flex items-center px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
                                             post.is_liked_by_user 
-                                            ? 'bg-red-50 text-red-600 hover:bg-red-100' 
-                                            : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                            ? 'bg-rose-500/10 text-rose-400 hover:bg-red-100' 
+                                            : 'bg-white/[0.01] text-slate-400 hover:bg-white/[0.02]'
                                         }`}
                                     >
                                         <Heart className={`w-4 h-4 mr-1.5 ${post.is_liked_by_user ? 'fill-current' : ''}`} />

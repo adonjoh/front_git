@@ -52,11 +52,11 @@ export default function Infractions() {
     return (
         <DashboardLayout title="Gestion des Infractions">
             <div className="space-y-6">
-                <div className="bg-red-50 border border-red-200 rounded-xl p-5 flex items-start">
-                    <AlertOctagon className="w-6 h-6 text-red-600 mr-3 flex-shrink-0 mt-0.5" />
+                <div className="bg-rose-500/10 border border-rose-500/20 rounded-xl p-5 flex items-start">
+                    <AlertOctagon className="w-6 h-6 text-rose-400 mr-3 flex-shrink-0 mt-0.5" />
                     <div>
                         <h2 className="text-lg font-bold text-red-900">Membres en zone critique</h2>
-                        <p className="text-red-700 mt-1">Cette liste contient tous les membres dont le score total est négatif. Vous pouvez leur envoyer un avertissement ou appliquer une sanction disciplinaire selon le règlement du club.</p>
+                        <p className="text-rose-400 mt-1">Cette liste contient tous les membres dont le score total est négatif. Vous pouvez leur envoyer un avertissement ou appliquer une sanction disciplinaire selon le règlement du club.</p>
                     </div>
                 </div>
 
@@ -67,25 +67,25 @@ export default function Infractions() {
                         <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-red-600"></div>
                     </div>
                 ) : infracteurs.length === 0 ? (
-                    <div className="bg-white rounded-xl border p-12 text-center shadow-sm">
-                        <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="bg-white/[0.02] backdrop-blur-md rounded-xl border p-12 text-center shadow-sm">
+                        <div className="w-20 h-20 bg-emerald-500/20 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                             <CheckCircle className="w-10 h-10" />
                         </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">Excellente nouvelle !</h3>
-                        <p className="text-gray-500">Aucun membre n'a de score négatif actuellement. La discipline du club est au beau fixe.</p>
+                        <h3 className="text-xl font-bold text-white mb-2">Excellente nouvelle !</h3>
+                        <p className="text-slate-400">Aucun membre n'a de score négatif actuellement. La discipline du club est au beau fixe.</p>
                     </div>
                 ) : (
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         {infracteurs.map(membre => (
-                            <div key={membre.id} className="bg-white rounded-xl border border-red-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-                                <div className="p-5 border-b border-red-50 bg-red-50/30 flex justify-between items-start">
+                            <div key={membre.id} className="bg-white/[0.02] backdrop-blur-md rounded-xl border border-red-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                                <div className="p-5 border-b border-red-50 bg-rose-500/10/30 flex justify-between items-start">
                                     <div className="flex items-center">
-                                        <div className="w-12 h-12 rounded-full bg-red-100 text-red-700 flex items-center justify-center font-bold text-lg mr-3 shadow-sm border border-red-200">
+                                        <div className="w-12 h-12 rounded-full bg-red-100 text-rose-400 flex items-center justify-center font-bold text-lg mr-3 shadow-sm border border-rose-500/20">
                                             {membre.name?.charAt(0).toUpperCase()}
                                         </div>
                                         <div>
-                                            <h3 className="font-bold text-gray-900">{membre.name}</h3>
-                                            <p className="text-xs text-gray-500">{membre.email}</p>
+                                            <h3 className="font-bold text-white">{membre.name}</h3>
+                                            <p className="text-xs text-slate-400">{membre.email}</p>
                                         </div>
                                     </div>
                                     <div className="bg-red-100 text-red-800 font-bold px-3 py-1 rounded-full text-sm flex items-center">
@@ -96,7 +96,7 @@ export default function Infractions() {
                                     <button
                                         onClick={() => handleAction(membre.id, 'notifier')}
                                         disabled={actionLoading === membre.id}
-                                        className="flex-1 flex justify-center items-center px-4 py-2 bg-yellow-50 hover:bg-yellow-100 text-yellow-700 border border-yellow-200 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
+                                        className="flex-1 flex justify-center items-center px-4 py-2 bg-amber-500/10 hover:bg-yellow-100 text-amber-400 border border-amber-500/20 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
                                     >
                                         <Bell className="w-4 h-4 mr-2" />
                                         Notifier

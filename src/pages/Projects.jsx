@@ -50,10 +50,10 @@ const Projects = () => {
     }
 
     const statutColor = {
-        brouillon: 'bg-gray-100 text-gray-600',
-        ouvert: 'bg-green-100 text-green-700',
-        en_cours: 'bg-blue-100 text-blue-700',
-        termine: 'bg-purple-100 text-purple-700',
+        brouillon: 'bg-white/[0.02] text-slate-400',
+        ouvert: 'bg-emerald-500/20 text-emerald-400',
+        en_cours: 'bg-blue-500/20 text-blue-400',
+        termine: 'bg-purple-500/20 text-purple-400',
     }
 
     const canCreate = ['chef_projet', 'admin'].includes(user?.role)
@@ -62,7 +62,7 @@ const Projects = () => {
         <DashboardLayout>
             <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                    <h2 className="text-2xl font-bold text-gray-800">📁 Projets</h2>
+                    <h2 className="text-2xl font-bold text-white">📁 Projets</h2>
                     {canCreate && (
                         <button
                             onClick={() => setShowForm(!showForm)}
@@ -75,44 +75,44 @@ const Projects = () => {
 
                 {/* Formulaire création */}
                 {showForm && (
-                    <div className="bg-white rounded-xl border p-6">
-                        <h3 className="font-semibold text-gray-800 mb-4">Créer un projet</h3>
+                    <div className="bg-white/[0.02] backdrop-blur-md rounded-xl border p-6">
+                        <h3 className="font-semibold text-white mb-4">Créer un projet</h3>
                         <form onSubmit={creerProjet} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Titre</label>
+                                <label className="block text-sm font-medium text-slate-300 mb-1">Titre</label>
                                 <input
                                     type="text" required
                                     value={form.titre}
                                     onChange={e => setForm({ ...form, titre: e.target.value })}
-                                    className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    className="w-full border border-white/10 bg-white/5 rounded-lg text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                                <label className="block text-sm font-medium text-slate-300 mb-1">Description</label>
                                 <textarea
                                     required rows={3}
                                     value={form.description}
                                     onChange={e => setForm({ ...form, description: e.target.value })}
-                                    className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    className="w-full border border-white/10 bg-white/5 rounded-lg text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                 />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Date de fin</label>
+                                    <label className="block text-sm font-medium text-slate-300 mb-1">Date de fin</label>
                                     <input
                                         type="date"
                                         value={form.date_fin}
                                         onChange={e => setForm({ ...form, date_fin: e.target.value })}
-                                        className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        className="w-full border border-white/10 bg-white/5 rounded-lg text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Max membres</label>
+                                    <label className="block text-sm font-medium text-slate-300 mb-1">Max membres</label>
                                     <input
                                         type="number" min={1} max={20}
                                         value={form.max_membres}
                                         onChange={e => setForm({ ...form, max_membres: e.target.value })}
-                                        className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        className="w-full border border-white/10 bg-white/5 rounded-lg text-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                     />
                                 </div>
                             </div>
@@ -126,7 +126,7 @@ const Projects = () => {
                                 <button
                                     type="button"
                                     onClick={() => setShowForm(false)}
-                                    className="border px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50"
+                                    className="border px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:bg-white/[0.01]"
                                 >
                                     Annuler
                                 </button>
@@ -137,24 +137,24 @@ const Projects = () => {
 
                 {/* Liste projets */}
                 {loading ? (
-                    <div className="text-center py-12 text-gray-400">Chargement...</div>
+                    <div className="text-center py-12 text-slate-500">Chargement...</div>
                 ) : projects.length === 0 ? (
-                    <div className="bg-white rounded-xl border p-12 text-center">
+                    <div className="bg-white/[0.02] backdrop-blur-md rounded-xl border p-12 text-center">
                         <p className="text-4xl mb-3">📭</p>
-                        <p className="text-gray-500">Aucun projet disponible pour le moment.</p>
+                        <p className="text-slate-400">Aucun projet disponible pour le moment.</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {projects.map(project => (
-                            <div key={project.id} className="bg-white rounded-xl border p-5 hover:shadow-md transition-shadow">
+                            <div key={project.id} className="bg-white/[0.02] backdrop-blur-md rounded-xl border p-5 hover:shadow-md transition-shadow">
                                 <div className="flex items-start justify-between mb-3">
-                                    <h3 className="font-semibold text-gray-800">{project.titre}</h3>
+                                    <h3 className="font-semibold text-white">{project.titre}</h3>
                                     <span className={`px-2 py-1 rounded text-xs font-medium ${statutColor[project.statut]}`}>
                                         {project.statut}
                                     </span>
                                 </div>
-                                <p className="text-sm text-gray-500 mb-4 line-clamp-2">{project.description}</p>
-                                <div className="flex items-center justify-between text-xs text-gray-400 mb-4">
+                                <p className="text-sm text-slate-400 mb-4 line-clamp-2">{project.description}</p>
+                                <div className="flex items-center justify-between text-xs text-slate-500 mb-4">
                                     <span>👤 {project.chef_projet?.prenom} {project.chef_projet?.nom}</span>
                                     {project.date_fin && (
                                         <span>📅 {new Date(project.date_fin).toLocaleDateString('fr-FR')}</span>
@@ -164,7 +164,7 @@ const Projects = () => {
                                 {user?.role === 'membre' && project.statut === 'ouvert' && (
                                     <button
                                         onClick={() => candidater(project.id)}
-                                        className="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 py-2 rounded-lg text-sm font-medium transition-colors"
+                                        className="w-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 py-2 rounded-lg text-sm font-medium transition-colors"
                                     >
                                         Candidater
                                     </button>

@@ -58,11 +58,11 @@ export default function MesProjets() {
         <DashboardLayout title="Mes Projets Gérés">
             <div className="space-y-6">
                 <div className="flex justify-between items-center">
-                    <h1 className="text-2xl font-bold text-gray-900">Projets que je dirige</h1>
+                    <h1 className="text-2xl font-bold text-white">Projets que je dirige</h1>
                 </div>
 
                 {error && (
-                    <div className="bg-red-50 text-red-600 p-4 rounded-xl border border-red-200">
+                    <div className="bg-rose-500/10 text-rose-400 p-4 rounded-xl border border-rose-500/20">
                         {error}
                     </div>
                 )}
@@ -72,7 +72,7 @@ export default function MesProjets() {
                         <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
                     </div>
                 ) : projects.length === 0 ? (
-                    <div className="bg-white rounded-xl border p-12 text-center text-gray-500">
+                    <div className="bg-white/[0.02] backdrop-blur-md rounded-xl border p-12 text-center text-slate-400">
                         <Folder className="w-16 h-16 mx-auto mb-4 text-gray-300" />
                         <p className="text-lg">Vous ne dirigez aucun projet pour le moment.</p>
                     </div>
@@ -82,17 +82,17 @@ export default function MesProjets() {
                             const candidaturesEnAttente = project.candidatures?.filter(c => c.statut === 'en_attente' || c.statut === 'attente') || [];
                             
                             return (
-                                <div key={project.id} className="bg-white rounded-xl border shadow-sm overflow-hidden transition-all">
+                                <div key={project.id} className="bg-white/[0.02] backdrop-blur-md rounded-xl border shadow-sm overflow-hidden transition-all">
                                     <div className="p-5">
                                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                                             <div>
-                                                <h3 className="text-lg font-bold text-gray-900">{project.titre || project.nom}</h3>
-                                                <p className="text-gray-600 mt-1 line-clamp-2">{project.description}</p>
+                                                <h3 className="text-lg font-bold text-white">{project.titre || project.nom}</h3>
+                                                <p className="text-slate-400 mt-1 line-clamp-2">{project.description}</p>
                                             </div>
                                             <div className="flex flex-wrap items-center gap-3">
                                                 <Link 
                                                     to={`/projets/${project.id}/taches`}
-                                                    className="px-4 py-2 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-lg text-sm font-medium transition-colors"
+                                                    className="px-4 py-2 bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 rounded-lg text-sm font-medium transition-colors"
                                                 >
                                                     Gérer les tâches
                                                 </Link>
@@ -100,8 +100,8 @@ export default function MesProjets() {
                                                     onClick={() => toggleProject(project.id)}
                                                     className={`px-4 py-2 flex items-center rounded-lg text-sm font-medium transition-colors ${
                                                         candidaturesEnAttente.length > 0 
-                                                        ? 'bg-yellow-50 text-yellow-700 hover:bg-yellow-100 border border-yellow-200' 
-                                                        : 'bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200'
+                                                        ? 'bg-amber-500/10 text-amber-400 hover:bg-yellow-100 border border-amber-500/20' 
+                                                        : 'bg-white/[0.01] text-slate-300 hover:bg-white/[0.02] border border-white/10'
                                                     }`}
                                                 >
                                                     <Users className="w-4 h-4 mr-2" />
@@ -114,35 +114,35 @@ export default function MesProjets() {
 
                                     {/* Section Candidatures (Expanded) */}
                                     {expandedProject === project.id && (
-                                        <div className="border-t border-gray-100 bg-gray-50 p-5">
-                                            <h4 className="font-semibold text-gray-800 mb-4 flex items-center">
-                                                <Clock className="w-4 h-4 mr-2 text-gray-500" /> 
+                                        <div className="border-t border-white/5 bg-white/[0.01] p-5">
+                                            <h4 className="font-semibold text-white mb-4 flex items-center">
+                                                <Clock className="w-4 h-4 mr-2 text-slate-400" /> 
                                                 Candidatures en attente
                                             </h4>
                                             
                                             {candidaturesEnAttente.length === 0 ? (
-                                                <p className="text-gray-500 text-sm">Aucune candidature en attente pour ce projet.</p>
+                                                <p className="text-slate-400 text-sm">Aucune candidature en attente pour ce projet.</p>
                                             ) : (
                                                 <div className="space-y-3">
                                                     {candidaturesEnAttente.map(c => (
-                                                        <div key={c.id} className="bg-white p-4 rounded-lg border border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
+                                                        <div key={c.id} className="bg-white/[0.02] backdrop-blur-md p-4 rounded-lg border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
                                                             <div className="flex items-center">
-                                                                <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold mr-3">
+                                                                <div className="w-10 h-10 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold mr-3">
                                                                     {c.user?.prenom ? c.user.prenom.charAt(0).toUpperCase() : '?'}
                                                                 </div>
                                                                 <div>
-                                                                    <p className="font-medium text-gray-900">
+                                                                    <p className="font-medium text-white">
                                                                         {c.user ? `${c.user.prenom || ''} ${c.user.nom || ''}`.trim() : 'Utilisateur inconnu'}
                                                                     </p>
-                                                                    <p className="text-xs text-gray-500">{c.user?.email || ''}</p>
-                                                                    {c.motivation && <p className="text-sm text-gray-600 mt-1 italic">"{c.motivation}"</p>}
+                                                                    <p className="text-xs text-slate-400">{c.user?.email || ''}</p>
+                                                                    {c.motivation && <p className="text-sm text-slate-400 mt-1 italic">"{c.motivation}"</p>}
                                                                 </div>
                                                             </div>
                                                             <div className="flex gap-2">
                                                                 <button
                                                                     onClick={() => handleTraiterCandidature(c.id, 'accepte')}
                                                                     disabled={actionLoading === c.id}
-                                                                    className="flex items-center px-3 py-1.5 bg-green-50 text-green-700 hover:bg-green-100 border border-green-200 rounded-md text-sm font-medium transition-colors disabled:opacity-50"
+                                                                    className="flex items-center px-3 py-1.5 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20 rounded-md text-sm font-medium transition-colors disabled:opacity-50"
                                                                 >
                                                                     {actionLoading === c.id ? <Clock className="w-4 h-4 mr-1 animate-spin" /> : <CheckCircle className="w-4 h-4 mr-1" />}
                                                                     Accepter
@@ -150,7 +150,7 @@ export default function MesProjets() {
                                                                 <button
                                                                     onClick={() => handleTraiterCandidature(c.id, 'refuse')}
                                                                     disabled={actionLoading === c.id}
-                                                                    className="flex items-center px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 rounded-md text-sm font-medium transition-colors disabled:opacity-50"
+                                                                    className="flex items-center px-3 py-1.5 bg-rose-500/10 text-rose-400 hover:bg-red-100 border border-rose-500/20 rounded-md text-sm font-medium transition-colors disabled:opacity-50"
                                                                 >
                                                                     {actionLoading === c.id ? <Clock className="w-4 h-4 mr-1 animate-spin" /> : <XCircle className="w-4 h-4 mr-1" />}
                                                                     Refuser

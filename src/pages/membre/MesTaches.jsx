@@ -64,12 +64,12 @@ export default function MesTaches() {
 
     const getStatusColor = (status) => {
         switch(status) {
-            case 'a_faire': return 'bg-gray-100 text-gray-800 border-gray-200';
-            case 'en_cours': return 'bg-blue-100 text-blue-800 border-blue-200';
-            case 'soumis': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-            case 'valide': return 'bg-green-100 text-green-800 border-green-200';
-            case 'rejete': return 'bg-red-100 text-red-800 border-red-200';
-            default: return 'bg-gray-100 text-gray-800 border-gray-200';
+            case 'a_faire': return 'bg-white/[0.02] text-white border-white/10';
+            case 'en_cours': return 'bg-blue-500/20 text-blue-800 border-blue-200';
+            case 'soumis': return 'bg-yellow-100 text-yellow-800 border-amber-500/20';
+            case 'valide': return 'bg-emerald-500/20 text-green-800 border-emerald-500/20';
+            case 'rejete': return 'bg-red-100 text-red-800 border-rose-500/20';
+            default: return 'bg-white/[0.02] text-white border-white/10';
         }
     };
 
@@ -88,11 +88,11 @@ export default function MesTaches() {
         <DashboardLayout title="Mes Tâches">
             <div className="space-y-6">
                 <div className="flex justify-between items-center">
-                    <h1 className="text-2xl font-bold text-gray-900">Tâches assignées</h1>
+                    <h1 className="text-2xl font-bold text-white">Tâches assignées</h1>
                 </div>
 
                 {error && (
-                    <div className="bg-red-50 text-red-600 p-4 rounded-xl border border-red-200 flex items-center">
+                    <div className="bg-rose-500/10 text-rose-400 p-4 rounded-xl border border-rose-500/20 flex items-center">
                         <AlertCircle className="w-5 h-5 mr-2" />
                         {error}
                     </div>
@@ -103,26 +103,26 @@ export default function MesTaches() {
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
                     </div>
                 ) : tasks.length === 0 ? (
-                    <div className="bg-white rounded-xl border p-12 text-center text-gray-500">
+                    <div className="bg-white/[0.02] backdrop-blur-md rounded-xl border p-12 text-center text-slate-400">
                         <CheckCircle className="w-16 h-16 mx-auto mb-4 text-gray-300" />
                         <p className="text-lg">Aucune tâche ne vous est assignée pour le moment.</p>
                     </div>
                 ) : (
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         {tasks.map(task => (
-                            <div key={task.id} className="bg-white rounded-xl border p-5 shadow-sm hover:shadow-md transition-shadow">
+                            <div key={task.id} className="bg-white/[0.02] backdrop-blur-md rounded-xl border p-5 shadow-sm hover:shadow-md transition-shadow">
                                 <div className="flex justify-between items-start mb-3">
                                     <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(task.statut)}`}>
                                         {getStatusText(task.statut)}
                                     </span>
-                                    <span className="text-xs font-medium text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md">
+                                    <span className="text-xs font-medium text-indigo-600 bg-indigo-500/10 px-2 py-1 rounded-md">
                                         {task.project_name}
                                     </span>
                                 </div>
-                                <h3 className="text-lg font-semibold text-gray-900 mb-2">{task.titre}</h3>
-                                <p className="text-gray-600 text-sm mb-4 line-clamp-3">{task.description}</p>
+                                <h3 className="text-lg font-semibold text-white mb-2">{task.titre}</h3>
+                                <p className="text-slate-400 text-sm mb-4 line-clamp-3">{task.description}</p>
                                 
-                                <div className="mt-4 flex gap-2 pt-4 border-t border-gray-100">
+                                <div className="mt-4 flex gap-2 pt-4 border-t border-white/5">
                                     {task.statut === 'a_faire' && (
                                         <button
                                             onClick={() => handleAction(task.id, 'accepter')}
@@ -144,7 +144,7 @@ export default function MesTaches() {
                                         </button>
                                     )}
                                     {(task.statut === 'soumis' || task.statut === 'valide') && (
-                                        <div className="flex-1 text-center py-2 text-sm text-gray-500 font-medium">
+                                        <div className="flex-1 text-center py-2 text-sm text-slate-400 font-medium">
                                             Aucune action requise
                                         </div>
                                     )}
