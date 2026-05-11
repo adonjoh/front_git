@@ -62,7 +62,7 @@ const DashboardLayout = ({ children }) => {
     const links = navLinks[user?.role] || navLinks.membre
 
     return (
-        <div className="min-h-screen bg-slate-50 flex font-sans text-slate-900">
+        <div className="min-h-[100dvh] bg-slate-50 flex font-sans text-slate-900">
             {/* Sidebar */}
             <aside className={`
                 fixed inset-y-0 left-0 z-50 w-72 bg-slate-950 text-slate-300 transform transition-transform duration-300 ease-in-out
@@ -139,7 +139,7 @@ const DashboardLayout = ({ children }) => {
             )}
 
             {/* Main */}
-            <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
+            <div className="flex-1 flex flex-col min-h-[100dvh] overflow-hidden">
                 {/* Header */}
                 <header className="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-30">
                     <div className="flex items-center gap-4">

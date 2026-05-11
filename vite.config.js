@@ -10,6 +10,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}']
+      },
       manifest: {
         name: 'Club Génie',
         short_name: 'ClubGénie',
@@ -17,6 +20,7 @@ export default defineConfig({
         theme_color: '#4f46e5',
         background_color: '#0f172a',
         display: 'standalone',
+        start_url: '/',
         icons: [
           {
             src: 'pwa-icon.svg',
@@ -28,4 +32,8 @@ export default defineConfig({
       }
     })
   ],
+  build: {
+    target: 'es2015',
+    cssTarget: 'chrome61'
+  }
 })

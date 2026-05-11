@@ -59,7 +59,7 @@ const Showcase = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-indigo-500/30">
+    <div className="min-h-[100dvh] bg-slate-950 text-slate-50 font-sans selection:bg-indigo-500/30">
       {/* Navbar */}
       <header className={`fixed top-0 w-full z-50 transition-all duration-300 border-b ${scrolled ? 'bg-slate-950/80 backdrop-blur-md border-slate-800/50 py-4' : 'bg-transparent border-transparent py-6'}`}>
         <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
