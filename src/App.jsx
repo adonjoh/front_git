@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import Landing from './pages/Landing';
 import Showcase from './pages/Showcase';
+import InstallPWA from './components/ui/InstallPWA';
 
 // Pages Membre
 import MesTaches from './pages/membre/MesTaches';
@@ -36,6 +37,7 @@ import ProtectedRoute from './components/layout/ProtectedRoute';
 function App() {
   return (
     <BrowserRouter>
+      <InstallPWA />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/vitrine" element={<Showcase />} />
