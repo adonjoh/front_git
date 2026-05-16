@@ -3,8 +3,10 @@ import axios from '../lib/axios';
 import { useAuth } from '../hooks/useAuth';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { MessageSquare, Heart, Send, Clock, Plus, X } from 'lucide-react';
+import { useNotificationStore } from '../stores/useNotificationStore';
 
 export default function Forum() {
+    const addToast = useNotificationStore(state => state.addToast);
     const { user } = useAuth();
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -40,7 +42,7 @@ export default function Forum() {
             setShowForm(false);
             fetchPosts();
         } catch (err) {
-            alert("Erreur lors de la création du post.");
+            addToast("Erreur lors de la création du post.", "error");
         } finally {
             setSubmitLoading(false);
         }

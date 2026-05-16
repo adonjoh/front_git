@@ -1,3 +1,4 @@
+import { useNotificationStore } from '../stores/useNotificationStore';
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import DashboardLayout from '../components/layout/DashboardLayout'
@@ -5,25 +6,36 @@ import { useAuth } from '../hooks/useAuth'
 import api from '../lib/axios'
 
 const Projects = () => {
+    const addToast = useNotificationStore(state => state.addToast);
     const [projects, setProjects] = useState([])
     const [loading, setLoading] = useState(true)
     const [showForm, setShowForm] = useState(false)
     const [form, setForm] = useState({ titre: '', description: '', date_fin: '', max_membres: 5 })
     const [submitting, setSubmitting] = useState(false)
+    const [mesCandidatures, setMesCandidatures] = useState([])
     const { user } = useAuth()
 
     const charger = async () => {
         try {
-            const res = await api.get('/projects')
-            setProjects(res.data)
+            const [projectsRes, candRes] = await Promise.all([
+                api.get('/projects'),
+                api.get('/mes-candidatures')
+            ]);
+            setProjects(projectsRes.data);
+            setMesCandidatures(candRes.data.data || candRes.data);
         } catch (err) {
-            console.error(err)
+            console.error(err);
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     }
 
     useEffect(() => { charger() }, [])
+
+    const getCandidatureStatut = (projectId) => {
+        const cand = mesCandidatures.find(c => c.projet_id === projectId || c.project_id === projectId);
+        return cand?.statut || null;
+    }
 
     const creerProjet = async (e) => {
         e.preventDefault()
@@ -43,9 +55,9 @@ const Projects = () => {
     const candidater = async (projectId) => {
         try {
             await api.post(`/projects/${projectId}/candidater`, { motivation: 'Je souhaite rejoindre ce projet.' })
-            alert('Candidature soumise avec succès !')
+            addToast('Candidature soumise avec succès !', "success")
         } catch (err) {
-            alert(err.response?.data?.message || 'Erreur.')
+            addToast(err.response?.data?.message || 'Erreur.', "error")
         }
     }
 
@@ -161,14 +173,23 @@ const Projects = () => {
                                     )}
                                     <span>👥 Max {project.max_membres}</span>
                                 </div>
-                                {user?.role === 'membre' && project.statut === 'ouvert' && (
-                                    <button
-                                        onClick={() => candidater(project.id)}
-                                        className="w-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 py-2 rounded-lg text-sm font-medium transition-colors"
-                                    >
-                                        Candidater
-                                    </button>
-                                )}
+                                {user?.role === 'membre' && project.statut === 'ouvert' && (() => {
+                                    const statut = getCandidatureStatut(project.id);
+                                    const canCandidater = statut === null || statut === 'refuse';
+                                    return (
+                                        <button
+                                            onClick={() => candidater(project.id)}
+                                            disabled={!canCandidater}
+                                            className={`w-full py-2 rounded-lg text-sm font-medium transition-colors ${
+                                                canCandidater 
+                                                ? 'bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400' 
+                                                : 'bg-slate-500/10 text-slate-500 cursor-not-allowed'
+                                            }`}
+                                        >
+                                            {statut === 'accepte' ? 'Accepté' : statut === 'en_attente' ? 'En attente' : statut === 'refuse' ? 'Repostuler' : 'Candidater'}
+                                        </button>
+                                    );
+                                })()}
                             </div>
                         ))}
                     </div>

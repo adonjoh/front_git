@@ -5,12 +5,16 @@ import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import Landing from './pages/Landing';
 import Showcase from './pages/Showcase';
+import Gamification from './pages/Gamification';
 import InstallPWA from './components/ui/InstallPWA';
+import ToastContainer from './components/ui/ToastContainer';
 
 // Pages Membre
 import MesTaches from './pages/membre/MesTaches';
 import Presences from './pages/membre/Presences';
 import Scores from './pages/membre/Scores';
+import MesCandidatures from './pages/membre/MesCandidatures';
+import MesParticipations from './pages/membre/MesParticipations';
 
 // Pages Chef de projet
 import MesProjets from './pages/chef/MesProjets';
@@ -38,9 +42,11 @@ function App() {
   return (
     <BrowserRouter>
       <InstallPWA />
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/vitrine" element={<Showcase />} />
+        <Route path="/gamification" element={<Gamification />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
@@ -68,6 +74,16 @@ function App() {
         <Route path="/mes-taches" element={
           <ProtectedRoute roles={['membre', 'chef_projet', 'admin']}>
             <MesTaches />
+          </ProtectedRoute>
+        } />
+        <Route path="/mes-candidatures" element={
+          <ProtectedRoute roles={['membre', 'chef_projet', 'admin']}>
+            <MesCandidatures />
+          </ProtectedRoute>
+        } />
+        <Route path="/mes-participations" element={
+          <ProtectedRoute roles={['membre', 'chef_projet', 'admin']}>
+            <MesParticipations />
           </ProtectedRoute>
         } />
         <Route path="/presences" element={

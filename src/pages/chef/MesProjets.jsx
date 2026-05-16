@@ -4,8 +4,10 @@ import { useAuth } from '../../hooks/useAuth';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import { Folder, Users, CheckCircle, XCircle, Clock, ChevronDown, ChevronUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useNotificationStore } from '../../stores/useNotificationStore';
 
 export default function MesProjets() {
+    const addToast = useNotificationStore(state => state.addToast);
     const { user } = useAuth();
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -18,9 +20,19 @@ export default function MesProjets() {
         try {
             const res = await axios.get('/projects');
             const allProjects = res.data.data || res.data;
-            // Filtrer les projets par chef_projet_id
             const myProjects = allProjects.filter(p => p.chef_projet_id === user?.id || p.user_id === user?.id);
-            setProjects(myProjects);
+            
+            const projectsWithCandidatures = await Promise.all(
+                myProjects.map(async (project) => {
+                    try {
+                        const candRes = await axios.get(`/projects/${project.id}/candidatures`);
+                        return { ...project, candidatures: candRes.data.data || candRes.data };
+                    } catch {
+                        return project;
+                    }
+                })
+            );
+            setProjects(projectsWithCandidatures);
         } catch (err) {
             setError("Erreur lors du chargement de vos projets.");
             console.error(err);
@@ -40,7 +52,7 @@ export default function MesProjets() {
             // Refresh to update candidatures
             await fetchProjects();
         } catch (err) {
-            alert("Erreur lors du traitement de la candidature.");
+            addToast("Erreur lors du traitement de la candidature.", "error");
         } finally {
             setActionLoading(null);
         }

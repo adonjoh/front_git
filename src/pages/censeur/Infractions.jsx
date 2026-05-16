@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import axios from '../../lib/axios';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import { AlertOctagon, Bell, Shield, Frown, CheckCircle } from 'lucide-react';
+import { useNotificationStore } from '../../stores/useNotificationStore';
 
 export default function Infractions() {
+    const addToast = useNotificationStore(state => state.addToast);
     const [infracteurs, setInfracteurs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -36,14 +38,14 @@ export default function Infractions() {
             if (actionType === 'notifier') {
                 // Peut-être envoyer une notification
                 await new Promise(r => setTimeout(r, 1000)); // Simulate API call
-                alert("Avertissement envoyé avec succès.");
+                addToast("Avertissement envoyé avec succès.", "success");
             } else if (actionType === 'sanctionner') {
                 // Peut-être suspendre le compte
                 await new Promise(r => setTimeout(r, 1000)); // Simulate API call
-                alert("Membre sanctionné.");
+                addToast("Membre sanctionné.", "success");
             }
         } catch (err) {
-            alert(`Erreur lors de l'action.`);
+            addToast(`Erreur lors de l'action.`, "error");
         } finally {
             setActionLoading(null);
         }

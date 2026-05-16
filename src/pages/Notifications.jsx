@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import axios from '../lib/axios';
 import DashboardLayout from '../components/layout/DashboardLayout';
-import { Bell, Check, CheckCircle2, Clock, Info } from 'lucide-react';
+import { Bell, CheckCircle2, Clock, Info } from 'lucide-react';
+import { useNotificationStore } from '../stores/useNotificationStore';
 
 export default function Notifications() {
+    const addToast = useNotificationStore(state => state.addToast);
     const [notifications, setNotifications] = useState([]);
     const [nonLues, setNonLues] = useState(0);
     const [loading, setLoading] = useState(true);
     const [actionLoading, setActionLoading] = useState(false);
+    const { clearUnread, decrementUnread, fetchUnreadCount } = useNotificationStore();
 
     const fetchNotifications = async () => {
         try {
@@ -17,7 +20,12 @@ export default function Notifications() {
             ]);
             
             setNotifications(notifsRes.data.data || notifsRes.data || []);
-            setNonLues(countRes.data.count || countRes.data || 0);
+            
+            let count = 0;
+            if (typeof countRes.data === 'number') count = countRes.data;
+            else if (countRes.data && typeof countRes.data.count === 'number') count = countRes.data.count;
+            
+            setNonLues(count);
         } catch (err) {
             console.error(err);
         } finally {
@@ -27,18 +35,19 @@ export default function Notifications() {
 
     useEffect(() => {
         fetchNotifications();
+        fetchUnreadCount(); // sync global store with backend
     }, []);
 
     const handleToutLire = async () => {
         setActionLoading(true);
         try {
             await axios.put('/notifications/tout-lire');
-            // Update local state to reflect changes instantly
             setNotifications(notifications.map(n => ({ ...n, lu: true, read_at: new Date().toISOString() })));
             setNonLues(0);
+            clearUnread();
         } catch (err) {
             console.error(err);
-            alert("Erreur lors de la mise à jour des notifications.");
+            addToast("Erreur lors de la mise à jour des notifications.", "error");
         } finally {
             setActionLoading(false);
         }
@@ -58,6 +67,9 @@ export default function Notifications() {
         
         // Recalculate unread
         const newCount = updated.filter(n => !n.read_at && !n.lu).length;
+        if (newCount < nonLues) {
+            decrementUnread();
+        }
         setNonLues(newCount);
 
         try {

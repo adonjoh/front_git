@@ -3,8 +3,10 @@ import axios from '../lib/axios';
 import { useAuth } from '../hooks/useAuth';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { Users, MessageCircle, Send, Hash, ArrowLeft } from 'lucide-react';
+import { useNotificationStore } from '../stores/useNotificationStore';
 
 export default function MesGroupes() {
+    const addToast = useNotificationStore(state => state.addToast);
     const { user } = useAuth();
     const [groupes, setGroupes] = useState([]);
     const [activeGroup, setActiveGroup] = useState(null);
@@ -73,7 +75,7 @@ export default function MesGroupes() {
             const res = await axios.get(`/groups/${activeGroup.id}/messages`);
             setMessages(res.data.data || res.data || []);
         } catch (err) {
-            alert("Erreur lors de l'envoi du message.");
+            addToast("Erreur lors de l'envoi du message.", "error");
         } finally {
             setSending(false);
         }

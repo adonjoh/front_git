@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import axios from '../../lib/axios';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import { Users, Plus, MessageSquare, Briefcase, Calendar, UserPlus } from 'lucide-react';
+import { useNotificationStore } from '../../stores/useNotificationStore';
 
 export default function Groupes() {
+    const addToast = useNotificationStore(state => state.addToast);
     const [groupes, setGroupes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -44,7 +46,7 @@ export default function Groupes() {
             setFormData({ nom: '', description: '', type: 'discussion' });
             fetchGroupes();
         } catch (err) {
-            alert("Erreur lors de la création du groupe.");
+            addToast("Erreur lors de la création du groupe.", "error");
         } finally {
             setSubmitLoading(false);
         }
@@ -58,10 +60,10 @@ export default function Groupes() {
         try {
             await axios.post(`/groups/${groupId}/membres`, { user_id: parseInt(userId) });
             setAddMemberData({...addMemberData, [groupId]: ''});
-            alert("Membre ajouté avec succès !");
+            addToast("Membre ajouté avec succès !", "success");
             // Optionnel : refresh du groupe si on affiche les membres
         } catch (err) {
-            alert("Erreur lors de l'ajout du membre. Vérifiez l'ID.");
+            addToast("Erreur lors de l'ajout du membre. Vérifiez l'ID.", "error");
         }
     };
 

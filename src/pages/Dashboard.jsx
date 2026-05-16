@@ -103,6 +103,7 @@ const ChefCards = () => (
 const MembreCards = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card title="Projets" desc="Découvrir et candidater" icon={<Folder className="w-7 h-7" />} to="/projects" color="from-indigo-500 to-blue-600" shadowColor="shadow-indigo-500/20" />
+        <Card title="Mes projets" desc="Projets acceptés et en attente" icon={<Briefcase className="w-7 h-7" />} to="/mes-participations" color="from-amber-500 to-orange-500" shadowColor="shadow-amber-500/20" />
         <Card title="Mes tâches" desc="Voir mes tâches assignées" icon={<CheckSquare className="w-7 h-7" />} to="/mes-taches" color="from-emerald-500 to-teal-500" shadowColor="shadow-emerald-500/20" />
         <Card title="Scanner QR" desc="Enregistrer ma présence" icon={<QrCode className="w-7 h-7" />} to="/presences" color="from-fuchsia-500 to-pink-600" shadowColor="shadow-fuchsia-500/20" />
     </div>

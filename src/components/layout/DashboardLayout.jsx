@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
+import { useNotificationStore } from '../../stores/useNotificationStore'
 import api from '../../lib/axios'
 import { 
     Home, Folder, CheckSquare, QrCode, Trophy, MessageSquare, 
@@ -13,6 +14,14 @@ const DashboardLayout = ({ children }) => {
     const navigate = useNavigate()
     const location = useLocation()
     const [menuOpen, setMenuOpen] = useState(false)
+    const { unreadCount, startPolling, stopPolling } = useNotificationStore()
+
+    useEffect(() => {
+        if (user) {
+            startPolling()
+        }
+        return () => stopPolling()
+    }, [user, startPolling, stopPolling])
 
     const handleLogout = async () => {
         try {
@@ -27,6 +36,7 @@ const DashboardLayout = ({ children }) => {
         membre: [
             { to: '/dashboard', label: 'Accueil', icon: <Home className="w-5 h-5" /> },
             { to: '/projects', label: 'Projets', icon: <Folder className="w-5 h-5" /> },
+            { to: '/mes-participations', label: 'Mes projets', icon: <Briefcase className="w-5 h-5" /> },
             { to: '/mes-taches', label: 'Mes tâches', icon: <CheckSquare className="w-5 h-5" /> },
             { to: '/presences', label: 'Présences', icon: <QrCode className="w-5 h-5" /> },
             { to: '/scores', label: 'Mon score', icon: <Trophy className="w-5 h-5" /> },
@@ -36,6 +46,7 @@ const DashboardLayout = ({ children }) => {
             { to: '/dashboard', label: 'Accueil', icon: <Home className="w-5 h-5" /> },
             { to: '/projects', label: 'Projets', icon: <Folder className="w-5 h-5" /> },
             { to: '/mes-projets', label: 'Mes projets gérés', icon: <Briefcase className="w-5 h-5" /> },
+            { to: '/mes-participations', label: 'Mes projets', icon: <Briefcase className="w-5 h-5" /> },
             { to: '/mes-taches', label: 'Mes tâches', icon: <CheckSquare className="w-5 h-5" /> },
             { to: '/presences', label: 'Présences', icon: <QrCode className="w-5 h-5" /> },
             { to: '/scores', label: 'Mon score', icon: <Trophy className="w-5 h-5" /> },
@@ -181,7 +192,11 @@ const DashboardLayout = ({ children }) => {
                         
                         <Link to="/notifications" className="relative p-3 bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 rounded-2xl transition-all group">
                             <Bell className="w-5 h-5" />
-                            <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-rose-500 border-2 border-[#05050f] rounded-full shadow-[0_0_8px_rgba(244,63,94,0.6)]"></span>
+                            {unreadCount > 0 && (
+                                <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1.5 flex items-center justify-center bg-rose-500 text-[10px] font-bold text-white border-2 border-[#05050f] rounded-full shadow-[0_0_8px_rgba(244,63,94,0.6)] animate-pulse">
+                                    {unreadCount > 99 ? '99+' : unreadCount}
+                                </span>
+                            )}
                         </Link>
                     </div>
                 </header>

@@ -3,8 +3,10 @@ import { useParams, Link } from 'react-router-dom';
 import axios from '../../lib/axios';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import { ArrowLeft, Plus, CheckCircle, XCircle, Clock, AlertCircle } from 'lucide-react';
+import { useNotificationStore } from '../../stores/useNotificationStore';
 
 export default function ProjetTaches() {
+    const addToast = useNotificationStore(state => state.addToast);
     const { id } = useParams();
     const [tasks, setTasks] = useState([]);
     const [project, setProject] = useState(null);
@@ -50,7 +52,7 @@ export default function ProjetTaches() {
             setShowForm(false);
             fetchProjectAndTasks();
         } catch (err) {
-            alert("Erreur lors de la création de la tâche.");
+            addToast("Erreur lors de la création de la tâche.", "error");
         } finally {
             setSubmitLoading(false);
         }
@@ -62,7 +64,7 @@ export default function ProjetTaches() {
             await axios.put(`/tasks/${taskId}/valider`, { statut });
             await fetchProjectAndTasks();
         } catch (err) {
-            alert("Erreur lors de la validation de la tâche.");
+            addToast("Erreur lors de la validation de la tâche.", "error");
         } finally {
             setActionLoading(null);
         }

@@ -1,3 +1,4 @@
+import { useNotificationStore } from '../../stores/useNotificationStore';
 import { useState, useEffect } from 'react'
 import DashboardLayout from '../../components/layout/DashboardLayout'
 import api from '../../lib/axios'
@@ -5,6 +6,7 @@ import api from '../../lib/axios'
 const ROLES = ['membre', 'chef_projet', 'censeur', 'admin']
 
 const Utilisateurs = () => {
+    const addToast = useNotificationStore(state => state.addToast);
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(true)
     const [filtreRole, setFiltreRole] = useState('')
@@ -43,7 +45,7 @@ const Utilisateurs = () => {
             await api.delete(`/admin/users/${userId}`)
             setUsers(users.filter(u => u.id !== userId))
         } catch (err) {
-            alert(err.response?.data?.message || 'Erreur.')
+            addToast(err.response?.data?.message || 'Erreur.', "error")
         }
     }
 

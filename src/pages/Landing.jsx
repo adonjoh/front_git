@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Calendar, Users, Shield, Award, Zap, Star, Target, Trophy, ArrowRight } from 'lucide-react';
+import { ChevronRight, Calendar, Users, Shield, Award, Zap, Star, Target, Trophy, ArrowRight, Code, BookOpen, Crown, Settings } from 'lucide-react';
 
 const Landing = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -123,59 +123,43 @@ const Landing = () => {
           </div>
         </section>
 
-        {/* Gamification Section */}
+        {/* Gamification Section (Brief) */}
         <section id="gamification" className="py-32 relative">
           <div className="container mx-auto px-6 md:px-12">
-            <div className="text-center max-w-3xl mx-auto mb-20">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-semibold mb-6 shadow-[0_0_20px_rgba(250,204,21,0.1)]">
+                <Trophy className="w-4 h-4" />
+                <span>Système de Prime GIT</span>
+              </div>
               <h2 className="text-4xl md:text-5xl font-bold mb-6">Jouez le jeu, devenez une légende</h2>
-              <p className="text-xl text-slate-400 font-light">Votre implication est récompensée. Cumulez des points, débloquez des badges et gravissez les échelons du club.</p>
+              <p className="text-xl text-slate-400 font-light">
+                Votre implication est récompensée. Gagnez des points pour votre présence, vos contributions techniques ou lors de compétitions.
+              </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6">
-                <h3 className="text-2xl font-bold mb-8 text-white flex items-center gap-3">
-                  <Target className="w-8 h-8 text-indigo-400" />
-                  Comment gagner des points ?
-                </h3>
-                {[
-                  { action: "Présence aux réunions", points: "+10 pts", color: "text-emerald-400", bg: "bg-emerald-400/10 border-emerald-500/20" },
-                  { action: "Tâche de projet complétée", points: "+50 pts", color: "text-blue-400", bg: "bg-blue-400/10 border-blue-500/20" },
-                  { action: "Aide sur le forum", points: "+20 pts", color: "text-purple-400", bg: "bg-purple-400/10 border-purple-500/20" },
-                  { action: "Absence non justifiée", points: "-30 pts", color: "text-red-400", bg: "bg-red-400/10 border-red-500/20" },
-                ].map((rule, i) => (
-                  <div key={i} className="flex items-center justify-between p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-colors">
-                    <span className="font-semibold text-slate-300 text-lg">{rule.action}</span>
-                    <span className={`font-bold px-4 py-2 rounded-xl border ${rule.color} ${rule.bg}`}>
-                      {rule.points}
-                    </span>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto mb-16">
+              {[
+                { rank: "Bronze", pts: "50 pts", reward: "Certificat", icon: <Star className="w-6 h-6 text-orange-400" /> },
+                { rank: "Argent", pts: "150 pts", reward: "Accès Formations", icon: <Shield className="w-6 h-6 text-slate-300" /> },
+                { rank: "Or", pts: "300 pts", reward: "Cadeau", icon: <Award className="w-6 h-6 text-yellow-400" /> },
+                { rank: "Élite", pts: "500 pts", reward: "Prime Financière", icon: <Crown className="w-6 h-6 text-indigo-400" /> },
+              ].map((level, i) => (
+                <div key={i} className="flex flex-col items-center text-center p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-colors group">
+                  <div className="w-14 h-14 rounded-2xl bg-[#05050f] border border-white/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                    {level.icon}
                   </div>
-                ))}
-              </div>
-
-              <div className="relative mt-8 md:mt-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-[2.5rem] blur-2xl"></div>
-                <div className="relative p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 shadow-2xl backdrop-blur-xl">
-                  <h3 className="text-2xl font-bold mb-10 text-center text-white">Les Rangs du Club</h3>
-                  <div className="space-y-10 relative before:absolute before:inset-y-0 before:left-[23px] before:w-[2px] before:bg-white/10">
-                    {[
-                      { rank: "Novice", pts: "0 - 100 pts", icon: <Star className="w-6 h-6 text-slate-400" /> },
-                      { rank: "Initié", pts: "100 - 500 pts", icon: <Zap className="w-6 h-6 text-blue-400" /> },
-                      { rank: "Expert", pts: "500 - 1000 pts", icon: <Award className="w-6 h-6 text-purple-400" /> },
-                      { rank: "Légende", pts: "1000+ pts", icon: <Trophy className="w-6 h-6 text-yellow-400" /> },
-                    ].map((level, i) => (
-                      <div key={i} className="relative flex items-center gap-8 pl-14 group">
-                        <div className="absolute left-0 w-12 h-12 rounded-2xl bg-[#05050f] border-2 border-white/10 flex items-center justify-center group-hover:border-indigo-500 group-hover:scale-110 transition-all z-10 shadow-lg">
-                          {level.icon}
-                        </div>
-                        <div className="flex-1">
-                          <h4 className="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">{level.rank}</h4>
-                          <p className="text-slate-400 font-medium">{level.pts}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                  <h4 className="text-xl font-bold text-white mb-2">{level.rank}</h4>
+                  <span className="text-xs font-black text-yellow-400 bg-yellow-500/10 px-3 py-1 rounded-full mb-3">{level.pts}</span>
+                  <p className="text-sm text-slate-400 font-medium">{level.reward}</p>
                 </div>
-              </div>
+              ))}
+            </div>
+
+            <div className="text-center">
+              <Link to="/gamification" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-lg font-bold hover:shadow-2xl hover:shadow-yellow-500/30 transition-all hover:-translate-y-1 group">
+                En savoir plus sur les primes
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
           </div>
         </section>

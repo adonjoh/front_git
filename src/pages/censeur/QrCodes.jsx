@@ -3,8 +3,10 @@ import axios from '../../lib/axios';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import { QRCodeSVG } from 'qrcode.react';
 import { QrCode, Plus, Clock, Activity, History } from 'lucide-react';
+import { useNotificationStore } from '../../stores/useNotificationStore';
 
 export default function QrCodes() {
+    const addToast = useNotificationStore(state => state.addToast);
     const [qrCodes, setQrCodes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -48,7 +50,7 @@ export default function QrCodes() {
             setFormData({ evenement: '', type: 'seance', expire_dans: '60' });
             fetchQrCodes();
         } catch (err) {
-            alert("Erreur lors de la génération du QR code.");
+            addToast("Erreur lors de la génération du QR code.", "error");
         } finally {
             setSubmitLoading(false);
         }
